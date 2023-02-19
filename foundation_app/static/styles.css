@@ -1,0 +1,7 @@
+/* Add styles here. */
+body {
+    color:black;
+    max-width: 500px;
+    margin: auto;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

@@ -3,19 +3,20 @@
 
 <h1>Make a donation:</h1>
 
-<form method="POST" action="{{ url_for('main.donate') }}">
-    {{ form.csrf_token }}
-    <fieldset>
-        <legend>Please enter the donation details:</legend>
+<div class="form-div">
+    <form method="POST" action="{{ url_for('main.donate') }}">
+        {{ form.csrf_token }}
+        <fieldset>
+            <legend>Please enter the donation details:</legend>
 
-        {{ form.amount.label }}
-        {{ form.amount }}
+            {{ form.amount.label }}
+            {{ form.amount }}
 
-        {{ form.donated_to.label }}
-        {{ form.donated_to }}
+            {{ form.donated_to.label }}
+            {{ form.donated_to }}
 
-        {{ form.submit }}
-    </fieldset>
-</form>
-
+            {{ form.submit }}
+        </fieldset>
+    </form>
+</div>
 {% endblock %}

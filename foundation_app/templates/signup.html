@@ -3,33 +3,34 @@
 
 <h1>Register as Donor</h1>
 
-<form action="/signup" method="POST">
-    {{ form.csrf_token }}
-    <fieldset>
-        <legend>Please enter your information:</legend>
+<div class="form-div">
+    <form action="/signup" method="POST">
+        {{ form.csrf_token }}
+        <fieldset>
+            <legend>Please enter your information:</legend>
 
-        {{ form.username.label }}
-        {{ form.username }}
-        <ul>
-            {% for error in form.username.errors %}
+            {{ form.username.label }}
+            {{ form.username }}
+            <ul>
+                {% for error in form.username.errors %}
+                    <li class="error">{{ error }}</li>
+                {% endfor %}
+            </ul>
+
+            {{ form.phone_number.label }}
+            {{ form.phone_number }}
+
+            {{ form.password.label }}
+            {{ form.password }}
+            <ul>
+            {% for error in form.password.errors %}
                 <li class="error">{{ error }}</li>
             {% endfor %}
-        </ul>
+            </ul>
 
-        {{ form.phone_number.label }}
-        {{ form.phone_number }}
-
-        {{ form.password.label }}
-        {{ form.password }}
-        <ul>
-        {% for error in form.password.errors %}
-            <li class="error">{{ error }}</li>
-        {% endfor %}
-        </ul>
-
-        {{ form.submit }}
-    </fieldset>
-</form>
-
+            {{ form.submit }}
+        </fieldset>
+    </form>
+</div>
 
 {% endblock %}

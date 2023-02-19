@@ -1,26 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
+<div class="user-account">
+    <h1>Welcome {{user.username}}!</h1>
 
-<h1>Welcome {{user.username}}</h1>
-
-<h2>Dashboard</h2>
-
-<p>My donations: </p>
-<ul>
-    {% for donation in user.donations  %}
-        <li>${{donation.amount}} donated to {{donation.campaign}}</li>
-    {% endfor %}
-</ul>
-
-<p>What do you want to do today? </p>
-
-<div>
-    <a href="/new_campaign">Create a new campaign</a>
-</div>
-<div>
-    <a href="/donate">DONATE to a campaign</a>
-</div>
-<div>
+    
+    <div class="my-donations">
+        <h2>Dashboard:</h2>
+        {% for donation in user.donations  %}
+            <p>${{donation.amount}} donated to {{donation.campaign}}</p>
+        {% endfor %}
+    </div>
+    <h2>What do you want to do today? </h2>
+    <a href="/new_campaign">Create campaign</a>
+    <a href="/donate">DONATE</a>
     <a href="/logout">Log Out</a>
 </div>
 {% endblock %}

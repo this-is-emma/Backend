@@ -2,20 +2,20 @@
 {% block content %}
 
 <h1>New Campaign</h1>
+<div class="form-div">
+    <form method="POST" action="{{ url_for('main.new_campaign') }}">
+        {{ form.csrf_token }}
+        <fieldset>
+            <legend>Please enter the campaign information:</legend>
 
-<form method="POST" action="{{ url_for('main.new_campaign') }}">
-    {{ form.csrf_token }}
-    <fieldset>
-        <legend>Please enter the campaign information:</legend>
+            {{ form.name.label }}
+            {{ form.name }}
 
-        {{ form.name.label }}
-        {{ form.name }}
+            {{ form.description.label }}
+            {{ form.description }}
 
-        {{ form.description.label }}
-        {{ form.description }}
-
-        {{ form.submit }}
-    </fieldset>
-</form>
-
+            {{ form.submit }}
+        </fieldset>
+    </form>
+</div>
 {% endblock %}

@@ -2,11 +2,121 @@
 <html>
     <head>
         <title>Welcome to the HOPE FOUNDATION</title>
+        <style>
+            body {
+              max-width: 900px;
+              margin: auto;
+              text-align: center;
+              height: 100%;
+              background: rgb(255, 211, 150);
+              background-image: url('https://i.pinimg.com/originals/3b/1b/3b/3b1b3bd2b9f1b4663049a88fe8f6bf29.gif');
+              background-repeat:repeat-x;
+              background-position:bottom;
+              background-size: 600px;
+              padding: 10px;
+              color:#ff8400;
+              font-size: larger;
+              font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            }
+
+            a:link, a:visited {
+            background-color: #ff8400;
+            color: white;
+            padding: 14px 25px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            }
+
+            a:hover, a:active {
+            background-color: white;
+            color: #ff8400;
+            }
+            
+            .content {
+              background-color: rgba(255, 231, 200, 0.549);
+              color:black;
+              margin: 25px;
+              padding: 25px;
+              display: grid;
+              grid-template-columns: 1fr 1fr 1fr;
+              grid-gap: 20px;
+              font-size: 20px;
+              border: 1px solid rgb(255, 183, 128);
+              border-radius: 5px;
+            }
+
+            .campaigns {
+              border: 1px solid #fba447;
+              border-radius: 5px;
+              background-color: #ffd2a3;
+              display: flex;
+              flex-direction: column;
+              padding: 25px;
+            }
+
+            #campaign-name {
+              color: #ff8400;
+            }
+
+            .total-donations {
+              border: 1px solid #ffd0d0;
+              margin: 10px;
+              padding:10px;
+              margin-top: auto;
+              background-color: #d45d69b5;
+              border-radius: 5px;
+            }
+
+            .form-div {
+              border: 1px solid #fba447;
+              border-radius: 5px;
+              background-color: #ffd3a3;
+              margin: 10px;
+              padding:20px;
+              padding-top: 150px;
+              width:800px;
+              height: 200px;
+            }
+
+            .user-account{
+              border: 1px solid #fba447;
+              border-radius: 5px;
+              background-color: #ffd3a386;
+              display: flex;
+              flex-direction: column;
+              margin: 10px;
+              padding:20px;
+            }
+
+            .user-account > a {
+                margin: 10px;
+                padding:20px;
+            }
+
+            .my-donations{
+              border: 1px solid #fba447;
+              border-radius: 5px;
+              background-color: #ffe7ce;
+              color: rgb(177, 0, 0);
+              margin: 10px;
+              padding:20px;
+            }
+
+            .flash-message {
+              background-color: white;
+              font-size: 30px;
+              color: green;
+            }
+            </style>
     </head>
     <body>
-        <div id="content">
+        <div id="all">
+            <h1>Hope Foundation</h1>
+            <p><em>Help us give back to communities!</em></p>   
+
             {% for message in get_flashed_messages() %}
-                <p>{{ message }}</p>
+                <p class="flash-message">{{ message }}</p>
             {% endfor %}
             <nav>
                 {% if current_user.is_authenticated %}
@@ -21,7 +131,9 @@
                     <a href="/signup">Sign up as a donor</a>
                 {% endif %}
             </nav>
+        
             {% block content %}{% endblock %}
+                
         </div>
     </body>
 </html>
