@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>New Campaign</h1>
+
+<form method="POST" action="{{ url_for('main.new_campaign') }}">
+    {{ form.csrf_token }}
+    <fieldset>
+        <legend>Please enter the campaign information:</legend>
+
+        {{ form.name.label }}
+        {{ form.name }}
+
+        {{ form.description.label }}
+        {{ form.description }}
+
+        {{ form.submit }}
+    </fieldset>
+</form>
+
+{% endblock %}

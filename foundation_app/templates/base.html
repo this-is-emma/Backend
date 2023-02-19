@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Welcome to the HOPE FOUNDATION</title>
+    </head>
+    <body>
+        <div id="content">
+            {% for message in get_flashed_messages() %}
+                <p>{{ message }}</p>
+            {% endfor %}
+            <nav>
+                {% if current_user.is_authenticated %}
+                    <a href="/">Home</a>
+                    <a href="/user_account">My account</a>
+                    <a href="/new_campaign">Create a campaign</a>
+                    <a href="/donate">DONATE</a>
+                    <a href="/logout">Log Out</a>
+                {% else %}
+                    <a href="/">Home</a>
+                    <a href="/login">Log in</a>
+                    <a href="/signup">Sign up as a donor</a>
+                {% endif %}
+            </nav>
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

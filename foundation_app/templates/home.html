@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h1>Hope Foundation</h1>
+
+<p><em>Help us give back to communities!</em></p>
+
+<h2>All Campaigns</h2>
+
+{% for campaign in all_campaigns %}
+<div class="campaigns">
+    <p><strong>Name:</strong> {{ campaign.name }}</p>
+    <p>{{campaign.description}}</p>
+    <p>Donations received: </p>
+    {% for donation in campaign.donations%}
+        <p>${{donation}}</p>
+    {% endfor %}
+
+    <h3>Total Donation received:</h3>
+    {% if donation_dict[campaign.id] %}
+        <strong><p>${{donation_dict[campaign.id]|sum}}</p></strong>
+    {% else %}
+    <i>No donation yet...</i>
+    {% endif %}
+</div>
+{% endfor %}
+
+{% endblock %}
