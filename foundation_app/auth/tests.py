@@ -52,50 +52,62 @@ def create_user():
 # Tests
 #################################################
 
+class AuthTests(unittest.TestCase):
 
-#CREATE USER
+    def setUp(self):
+        """Executed prior to each test."""
+        app.config['TESTING'] = True
+        app.config['WTF_CSRF_ENABLED'] = False
+        app.config['DEBUG'] = False
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
+        self.app = app.test_client()
+        db.drop_all()
+        db.create_all()
+
+    #TEST SIGNUP ROUTE
+    def test_create_user(self):
+        """Test creating a new user."""
+        post_data = {
+            'username': 'me1',
+            'phone_number': '416-222-1234',
+            'password': bcrypt.generate_password_hash('password').decode('utf-8'),
+        }
+        self.app.post('/signup', data=post_data)
+
+        # Verify campaign was updated in the database
+        new_user = User.query.filter_by(username='me1').first()
+        self.assertEqual(new_user.phone_number, '416-222-1234')
 
 
-
-#USER PROFILE
-
-def test_profile_page(self):
-    # TODO: Make a GET request to the /profile/me1 route
-    create_user()
-    login(self.app, 'me1', 'password')
-    response = self.app.get('/profile/me1', follow_redirects=True)
-    self.assertEqual(response.status_code, 200)
-
-    # TODO: Verify that the response shows the appropriate user info
-    response_text = response.get_data(as_text=True)
-    self.assertIn('me1', response_text) 
-
-
-#test homepage logged in 
-
- def test_homepage_logged_in(self):
-        """Test that the books show up on the homepage."""
-        # Set up
-        create_books()
+    #TEST USER_ACCOUNT ROUTE
+    
+    def test_profile_page(self):
         create_user()
-        login(self.app, 'me1', 'password')
+        login(self.app, 'moi', 'password')
+        response = self.app.get('/user_account', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
+
+        # TODO: Verify that the response shows the appropriate user info
+        response_text = response.get_data(as_text=True)
+        self.assertIn('moi', response_text) 
+        self.assertIn('Dashboard', response_text) 
+
+
+    #TEST LOGGOUT ROUTE 
+
+    def test_logout(self):
+        """Test that Logout page shows appropriate msg."""
+        # Set up
+        create_user()
+        login(self.app, 'moi', 'password')
 
         # Make a GET request
-        response = self.app.get('/', follow_redirects=True)
+        response = self.app.get('/logout', follow_redirects=True)
         self.assertEqual(response.status_code, 200)
 
         # Check that page contains all of the things we expect
         response_text = response.get_data(as_text=True)
-        self.assertIn('To Kill a Mockingbird', response_text)
-        self.assertIn('The Bell Jar', response_text)
-        self.assertIn('me1', response_text)
-        self.assertIn('Create Book', response_text)
-        self.assertIn('Create Author', response_text)
-        self.assertIn('Create Genre', response_text)
-
-        # Check that the page doesn't contain things we don't expect
-        # (these should be shown only to logged out users)
-        self.assertNotIn('Log In', response_text)
-        self.assertN
+        self.assertIn('<p class="flash-message">Successfully logged out!</p>', response_text)
+        self.assertIn('login', response_text)
 
 

@@ -51,8 +51,6 @@ def create_user():
 # Tests
 #################################################
 
-#CREATE CAMPAIGN
-
 class MainTests(unittest.TestCase):
  
     def setUp(self):
@@ -65,7 +63,7 @@ class MainTests(unittest.TestCase):
         db.drop_all()
         db.create_all()
 
-
+    # TEST CAMPAIGN ROUTE
     def test_create_campaign(self):
         """Test creating a campaign."""
 
@@ -85,50 +83,38 @@ class MainTests(unittest.TestCase):
         self.assertIsNotNone(created_campaign)
         self.assertEqual(created_campaign.name, 'third campaign')
 
-    #make donation
-'''
-    def test_create_author(self):
-            """Test creating an author."""
+    # TEST DONATE ROUTE
+    def test_create_donation(self):
+        """Test creating a donation."""
 
-            # TODO: Create a user & login (so that the user can access the route)
-            create_user()
-            login(self.app, 'me1', 'password')
+        #Create a user & login
+        create_user()
+        login(self.app, 'moi', 'password')
+        create_campaign()
 
-            # TODO: Make a POST request to the /create_author route
-            post_data = {
-                'name': 'Frank Herbert',
-                'biography': 'He wrote a lot of stuff',
-            }
-            self.app.post('/create_author', data=post_data)
+        #POST request to the /donation route
+        post_data = {
+            'amount': 100,
+            'donated_by_id': 1,
+            'donated_to': 1,
+        }
+        self.app.post('/donate', data=post_data)
 
-            # TODO: Verify that the author was updated in the database
-            created_author = Author.query.filter_by(name='Frank Herbert').one()
-            self.assertIsNotNone(created_author)
-            self.assertE
+        # Verify campaign was updated in the database
+        donation = Donation.query.filter_by(amount='100').first()
+        self.assertIsNotNone(donation)
+        self.assertEqual(donation.amount, 100)
 
 
-    # TEST HOMEPAGE LOGGED OUT
-
-    def test_book_detail_logged_out(self):
+    # TEST HOMEPAGE ROUTE (WHEN NOT LOGGED IN)
+    def test_homepage_logged_out(self):
             """Test that the book appears on its detail page."""
-            # TODO: Use helper functions to create books, authors, user
-            create_books()
-            create_user()
-            login(self.app, 'me1', 'password')
 
-            # TODO: Make a GET request to the URL /book/1, check to see that the
-            # status code is 200
-            response = self.app.get('/book/1', follow_redirects=True)
+            response = self.app.get('/', follow_redirects=True)
             self.assertEqual(response.status_code, 200)
 
-
-            # TODO: Check that the response contains the book's title, publish date,
-            # and author's name
             response_text = response.get_data(as_text=True)
-            self.assertIn("<h1>To Kill a Mockingbird</h1>", response_text)
-            self.assertIn("Harper Lee", response_text)
+            self.assertNotIn("Create a campaign", response_text)
+            self.assertIn("Log in", response_text)
 
-            # TODO: Check that the response does NOT contain the 'Favorite' button
-            # (it should only be shown to logged in users)
-            self.assertNotIn("
-'''
+            

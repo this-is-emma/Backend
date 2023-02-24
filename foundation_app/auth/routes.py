@@ -49,5 +49,5 @@ def user_account():
 @auth.route('/logout')
 def logout():
     logout_user()
-    flash('Successfully logged out.')
+    flash('Successfully logged out!')
     return redirect(url_for('main.homepage'))

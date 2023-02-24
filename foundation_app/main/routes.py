@@ -48,10 +48,7 @@ def new_campaign():
 @login_required
 def donate():
     form = DonationForm()
-    print(form.donated_to.data)
     if form.validate_on_submit():
-        print("went in the loop")
-        form.errors
         donation = Donation(
             amount = form.amount.data, 
             donated_by_id = current_user.id,
