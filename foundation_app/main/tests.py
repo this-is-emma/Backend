@@ -108,13 +108,13 @@ class MainTests(unittest.TestCase):
 
     # TEST HOMEPAGE ROUTE (WHEN NOT LOGGED IN)
     def test_homepage_logged_out(self):
-            """Test that the book appears on its detail page."""
+        """Test that the book appears on its detail page."""
 
-            response = self.app.get('/', follow_redirects=True)
-            self.assertEqual(response.status_code, 200)
+        response = self.app.get('/', follow_redirects=True)
+        self.assertEqual(response.status_code, 200)
 
-            response_text = response.get_data(as_text=True)
-            self.assertNotIn("Create a campaign", response_text)
-            self.assertIn("Log in", response_text)
+        response_text = response.get_data(as_text=True)
+        self.assertNotIn("Create a campaign", response_text)
+        self.assertIn("Log in", response_text)
 
             
