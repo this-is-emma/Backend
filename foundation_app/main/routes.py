@@ -45,7 +45,6 @@ def new_campaign():
 
 
 @main.route('/donate', methods=['GET', 'POST'])
-@login_required
 def donate():
     form = DonationForm()
     if form.validate_on_submit():
@@ -60,3 +59,33 @@ def donate():
         flash('Thank you for your donation!')
         return redirect(url_for('main.homepage'))
     return render_template('donate.html', form = form)
+
+@main.route('/campaign/<campaign_id>', methods=['POST', 'GET'])
+def campaign_detail(campaign_id):
+    campaign = Campaign.query.get(campaign_id)
+    form = CampaignForm(obj = campaign)
+    if form.validate_on_submit():
+        campaign.name = form.name.data
+        campaign.description = form.description.data
+        #db.session.merge(item)
+        db.session.commit()
+        flash('Campaign updated successfully.')
+        return redirect(url_for('main.campaign_detail', campaign_id=campaign_id))
+    return render_template('campaign_detail.html', campaign=campaign, form=form)
+
+@main.route('/delete_campaign/<campaign_id>', methods=['POST', 'GET'])
+@login_required
+def delete_campaign(campaign_id):
+    campaign = Campaign.query.get(campaign_id)
+    form = CampaignForm(obj = campaign)
+    if form.validate_on_submit():
+        print('went in the loop!')
+        campaign = Campaign.query.get(campaign_id)
+        db.session.delete(campaign)
+        db.session.commit()
+        flash('Campaign deleted successfully.')
+        return redirect(url_for('main.homepage'))
+    print(form.errors)
+    return render_template('campaign_detail.html', campaign=campaign, form=form)
+
+

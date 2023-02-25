@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Campaign - {{ campaign.name }}</h1>
+
+<p><strong>Name:</strong> {{ campaign.name }}</p>
+
+<p><strong>Description:</strong> {{campaign.description}}</p>
+
+<p><strong><a href="/donate">DONATE</a></strong></p>
+
+{% if current_user.is_authenticated %}
+    <h2>Edit Campaign:</h2>
+
+    <div class="form-div">
+        <form method="POST" action="{{ url_for('main.campaign_detail', campaign_id = campaign.id) }}">
+            {{ form.csrf_token }}
+                <legend>Please edit below:</legend><br>
+
+                {{ form.name.label }}
+                {{ form.name }}
+
+                {{ form.description.label }}
+                {{ form.description }}
+                <br>
+                {{ form.submit }}
+        </form>
+    </div>
+
+    <h2>Delete Campaign:</h2>
+
+    <div class="form-div">
+        <form action="/delete_campaign/{{campaign.id}}" method="POST" >
+            {{ form.csrf_token }}
+            <input type="submit" value="DELETE">
+        </form>
+    </div>
+{% endif %}
+{% endblock %}
