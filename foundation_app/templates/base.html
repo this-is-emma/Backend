@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Welcome to the HOPE FOUNDATION</title>
+        <title>LES EPIS</title>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Josefin Sans">
         <style>
           * {
             box-sizing: border-box;
@@ -11,38 +12,53 @@
 
           body { 
             margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: "Josefin Sans";
+            font-weight: lighter;
             background-image: url('../static/epis3.jpg');
             background-size: cover;
+            position: relative;
+
+          }
+
+          .header {
+            overflow: hidden;
+            padding: 15px 5.2rem;
+            height: 280px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            font-weight: lighter;
+            
+          }
+          
+          .header > :last-child {
+            align-self:flex-end;
+          }
+
+          .header > :first-child{
+            margin-top: 50px;
+            align-self: flex-end;
+            font-weight: lighter;
             
           }
 
-          .footer{
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 180px;
-            width: 100vw;
-            padding-top: 40px;
-            
+          .footer {
+            padding: 25px;
+            text-align: right;
+            height: 150px;
+            color: white;
+            font-size: 15px;
+            font-weight:100;
           }
 
           main{
             background-color: white;
           }
-          
-          .header {
-            overflow: hidden;
-            padding: 20px 10px;
-            height: 280px;
-            justify-content: center;
-          }
-
           .header a {
             float: left;
             color: black;
-            text-align: center;
+            
             padding: 12px;
             text-decoration: none;
             font-size: 18px; 
@@ -70,14 +86,37 @@
           }
           .flash-message {
             background-color: white;
+            text-align: center;
             font-size: 30px;
             color: green;
           }
+
+          .content {
+            color:black;
+            margin: 25px;
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 20px;
+            font-size: 20px;
+          }
+
+          .campaigns {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(0, 0, 0, 0.233);
+            border-radius: 8px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            padding: 0.5rem 1.8rem;
+            margin: 50px 40px;
+            padding-bottom: 30px;
+          }
+
           @media screen and (max-width: 500px) {
             .header a {
-              float: none;
+              float: left;
               display: block;
-              text-align: left;
+
             }
             
             .header-right {
@@ -89,35 +128,36 @@
     </head>
     <body>
       <header class="header">
-        <h1>Hope Foundation</h1>
-        <p><em>Help us give back to communities!</em></p>   
-
-        {% for message in get_flashed_messages() %}
-            <p class="flash-message">{{ message }}</p>
-        {% endfor %}
-        <nav>
+        <h1>FONDATION LES EPIS</h1>
+        <h2>Giving back to communities</h2>
+        <div class="'navbar">
           {% if current_user.is_authenticated %}
-            <a href="/">Home</a>
-            <a href="/user_account">My account</a>
-            <a href="/new_campaign">Create a campaign</a>
-            <a href="/logout">Log Out</a>
+          <a href="/">Home</a>
+          <a href="/user_account">My account</a>
+          <a href="/new_campaign">Create a campaign</a>
+          <a href="/logout">Log Out</a>
           {% else %}
-            <a href="/">Home</a>
-            <a href="/donate">DONATE</a>
-            <a href="/login">Log in</a>
-            <a href="/signup">Sign up as a donor</a>
+          <a href="/">Home</a>
+          <a href="/donate">DONATE</a>
+          <a href="/login">Log in</a>
+          <a href="/signup">Sign up as a donor</a>
           {% endif %}
-        </nav>
+        </div>
       </header>
       <main>
         <div id="all">
-        
-            {% block content %}{% endblock %}
+          
+          {% for message in get_flashed_messages() %}
+              <p class="flash-message">{{ message }}</p>
+          {% endfor %}
+          {% block content %}{% endblock %}
                 
         </div>
       </main> 
       <footer class="footer">
-        foooterrrrrrrr
+        <div class="footer-containter">
+          <p>EmmaDesigns | A family initiative | Background image from <a href='unsplash.com'>Unsplash</a></p>
+        </div>
       </footer>
     </body>
 </html>
