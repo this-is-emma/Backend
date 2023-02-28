@@ -6,8 +6,11 @@ class User(UserMixin, db.Model):
     """Donor model."""
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), nullable=False, unique=True)
+    first_name = db.Column(db.String(100), nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    email = db.Column(db.String(200), nullable=False)
     phone_number = db.Column(db.String(100), nullable=True)
+    is_admin = db.Column(db.Boolean, unique=False, default=False)
     donations = db.relationship('Donation', back_populates='donor')
 
     def __str__(self):

@@ -11,7 +11,10 @@
         {% endfor %}
     </div>
     <h2>What do you want to do today? </h2>
+    {% if current_user.is_admin %}
     <a href="/new_campaign">Create campaign</a>
+    <a href="/set_admin">Set new admin</a>
+    {% endif %}
     <a href="/donate">DONATE</a>
     <a href="/logout">Log Out</a>
 </div>

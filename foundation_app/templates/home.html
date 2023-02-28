@@ -6,12 +6,8 @@
     <div class="campaigns">
         <p id="campaign-name"><strong><a href="/campaign/{{campaign.id }}">{{ campaign.name }}</a></strong></p>
         <p>{{campaign.description}}</p>
-        <p>Donations received: </p>
-        {% for donation in campaign.donations%}
-            <p>${{donation}}</p>
-        {% endfor %}
         <div class="total-donations">
-            <h3>Total received:</h3>
+            <h3>Total received so far:</h3>
             {% if donation_dict[campaign.id] %}
                 <strong><p>${{donation_dict[campaign.id]|sum}}</p></strong>
             {% else %}

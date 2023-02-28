@@ -5,10 +5,21 @@
 <p><strong>Name:</strong> {{ campaign.name }}</p>
 
 <p><strong>Description:</strong> {{campaign.description}}</p>
+{% if campaign.donations %}
+<p><strong>Donors:</strong></p>
+<ul>
+    {% for donation in campaign.donations %}
+    <li>{{ donation.donor}} pledged ${{donation.amount}}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No donation yet...</p> 
+{% endif %}
+
 
 <p><strong><a href="/donate">DONATE</a></strong></p>
 
-{% if current_user.is_authenticated %}
+{% if current_user.is_authenticated and current_user.is_admin %}
     <h2>Edit Campaign:</h2>
 
     <div class="form-div">

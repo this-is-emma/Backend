@@ -16,8 +16,11 @@ def signup():
         user = User(
             username=form.username.data,
             phone_number = form.phone_number.data,
+            first_name = form.first_name.data,
+            email = form.email.data,
             password=hashed_password
         )
+
         db.session.add(user)
         db.session.commit()
         flash('New account Created.')
@@ -32,6 +35,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         login_user(user, remember=True)
         next_page = request.args.get('next')
+        print(f'{user.first_name} is admin? {user.is_admin}')
         return redirect(next_page if next_page else url_for('auth.user_account'))
     return render_template('login.html', form=form)
 
@@ -50,4 +54,12 @@ def user_account():
 def logout():
     logout_user()
     flash('Successfully logged out!')
+    return redirect(url_for('main.homepage'))
+
+@auth.route('/set_admin')
+def set_admin():
+    user = User.query.filter_by(id=1).first()
+    user.is_admin = True
+    db.session.commit()
+    flash('User 1 is now admin!')
     return redirect(url_for('main.homepage'))
