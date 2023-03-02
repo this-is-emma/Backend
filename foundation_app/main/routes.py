@@ -64,7 +64,6 @@ def donate():
 @main.route('/campaign/<campaign_id>', methods=['POST', 'GET'])
 def campaign_detail(campaign_id):
     campaign = Campaign.query.get(campaign_id)
-    print(campaign.donations[0].donor)
     form = CampaignForm(obj = campaign)
     if form.validate_on_submit():
         campaign.name = form.name.data

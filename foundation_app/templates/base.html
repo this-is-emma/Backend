@@ -159,27 +159,43 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-          }
-
-          .form-div 
-
-          
-          
-
-
-
-          @media screen and (max-width: 500px) {
-            .header a {
-              float: left;
-              display: block;
-
-            }
             
-            .header-right {
-              float: none;
-            }
           }
-          
+
+          .campaign-details {
+            text-align: left;
+            padding-top: 2.5em;
+            padding-left: 3.5em;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5em;
+            list-style: none;
+          }
+
+          .campaign-details ul {
+            list-style: none;
+            line-height: 2;
+            margin-top: 10px;
+          }
+
+          .campaign-details strong {
+            font-weight: bold;
+          }
+
+          .campaign-details a{
+            text-decoration: none;
+            color: rgb(209, 133, 0);
+            transition: all 1s ease-out;
+            font-size: 30px;
+          }
+
+          .campaign-details a:hover{
+            color: rgb(255, 77, 0);
+            margin-left: 10px;
+            transition: all 1.2s ease;
+          }
+
+                
           </style>
     </head>
     <body>
