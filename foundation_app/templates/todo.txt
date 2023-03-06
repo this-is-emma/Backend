@@ -1,0 +1,17 @@
+TODO: 
+    chge campaign model to add:
+      date created - date 
+      active - bool
+      picture - ???? peraps string 
+      comments 
+
+   chge user model to add:
+      date joined 
+
+   Allow admin to see all users name, date joined and donations! 
+
+   Add avatar for users
+
+   make blurry edge of footer/header 
+
+   
