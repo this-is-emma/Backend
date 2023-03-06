@@ -6,52 +6,49 @@
 <div class="form-div">
     <form action="/signup" method="POST">
         {{ form.csrf_token }}
-        <fieldset>
-            <legend>Please enter your information:</legend>
+        <legend>Please enter your information:</legend>
 
-            {{ form.username.label }}<span class="asterix">*</span>
-            {{ form.username }} (To be used for login and displayed on the site)
+        <p class="asterix">{{ form.username.label }}*</p>
+        {{ form.username }} (To be used for login and displayed on the site)
 
-            <ul>
-                {% for error in form.username.errors %}
-                    <li class="error">{{ error }}</li>
-                {% endfor %}
-            </ul>
-
-            {{ form.first_name.label }} <span class="asterix">*</span>
-            {{ form.first_name }}
-
-            <ul>
-                {% for error in form.first_name.errors %}
-                    <li class="error">{{ error }}</li>
-                {% endfor %}
-            </ul>
-
-            {{ form.email.label }}<span class="asterix">*</span>
-            {{ form.email }}
-            <ul>
-                {% for error in form.email.errors %}
-                    <li class="error">{{ error }}</li>
-                {% endfor %}
-            </ul>
-            
-            {{ form.phone_number.label }} <span class="optional-span">(optional)</span>
-            {{ form.phone_number }}
-            <ul>
-                {% for error in form.phone_number.errors %}
-                    <li class="error">{{ error }}</li>
-                {% endfor %}
-            </ul>
-            {{ form.password.label }}<span class="asterix">*</span>
-            {{ form.password }}
-            <ul>
-            {% for error in form.password.errors %}
+        <ul>
+            {% for error in form.username.errors %}
                 <li class="error">{{ error }}</li>
             {% endfor %}
-            </ul>
+        </ul>
 
-            {{ form.submit }}
-        </fieldset>
+        <p class="asterix">{{ form.first_name.label }} *</p>
+        {{ form.first_name }}
+
+        <ul>
+            {% for error in form.first_name.errors %}
+                <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+
+        <p class="asterix">{{ form.email.label }}*</p>
+        {{ form.email }}
+        <ul>
+            {% for error in form.email.errors %}
+                <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        
+         <p class="optional-span">{{ form.phone_number.label }} (optional)</p>
+        {{ form.phone_number }}
+        <ul>
+            {% for error in form.phone_number.errors %}
+                <li class="error">{{ error }}</li>
+            {% endfor %}
+        </ul>
+        <p class="asterix">{{ form.password.label }}*</p>
+        {{ form.password }}
+        <ul>
+        {% for error in form.password.errors %}
+            <li class="error">{{ error }}</li>
+        {% endfor %}
+        </ul>
+        {{ form.submit }}
     </form>
 </div>
 

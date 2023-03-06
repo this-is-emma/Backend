@@ -2,10 +2,8 @@
 {% block content %}
 <div class="campaign-details">
     <h1>{{ campaign.name }}</h1>
-
-    <p><strong>What is it about:</strong> {{campaign.description}}</p>
+    <p>{{campaign.description}}</p>
     {% if campaign.donations %}
-        <p><strong>Donations:</strong></p>
         <ul>
             {% for donation in campaign.donations %}
             <li>{{ donation.donor}} pledged ${{donation.amount}}</li>
@@ -40,7 +38,7 @@
         <h2>Delete Campaign:</h2>
         <form action="/delete_campaign/{{campaign.id}}" method="POST" >
             {{ form.csrf_token }}
-            <input type="submit" value="DELETE">
+            <input type="submit" id="submit" value="Delete Campaign">
         </form>
     </div>
 {% endif %}
