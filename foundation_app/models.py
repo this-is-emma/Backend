@@ -21,6 +21,7 @@ class Campaign(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     description = db.Column(db.String(80), nullable=False)
+    photo_url = db.Column(URLType)
     donations = db.relationship('Donation', back_populates='campaign')
 
     def __str__(self):

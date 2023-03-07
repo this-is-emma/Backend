@@ -2,12 +2,17 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
-#from books_app.config import Config
+from flask_uploads import UploadSet, IMAGES, configure_uploads
 from foundation_app.config import Config
 import os
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
+#Photo galleries:
+photos = UploadSet('photos', IMAGES)
+configure_uploads(app, photos)
+
 
 db = SQLAlchemy(app)
 

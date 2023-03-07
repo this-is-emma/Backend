@@ -1,15 +1,13 @@
-from flask import Blueprint, request, render_template, redirect, url_for, flash
+from flask import Blueprint, request, render_template, redirect, url_for, flash, send_from_directory, url_for
 from datetime import date, datetime
-
+from foundation_app.extensions import photos
 from flask_login import current_user, login_required
 from foundation_app.models import Campaign, Donation
 from foundation_app.main.forms import CampaignForm, DonationForm
-
+from foundation_app.config import Config
 from foundation_app.extensions import app, db
 
 main = Blueprint('main', __name__)
-
-# Create your routes here.
 
 @main.route('/')
 def homepage():
@@ -19,28 +17,37 @@ def homepage():
         i = campaign.id
         donation_dict[i] = []
         for donation in campaign.donations:
-            donation_dict[i].append(donation.amount)
-    
-    print(donation_dict)
-
-        
+            donation_dict[i].append(donation.amount)  
     return render_template('home.html', all_campaigns=all_campaigns, donation_dict = donation_dict)
 
+#PHOTO DISPLAYING
+@main.route('/uploads/<filename>')
+def get_file(filename):
+    return send_from_directory(app.config['UPLOADED_PHOTOS_DEST'], filename)
+    
 
 @main.route('/new_campaign', methods=['GET', 'POST'])
 @login_required
 def new_campaign():
     form = CampaignForm()
     if form.validate_on_submit():
+        #PHOTO HANDLING
+        filename = photos.save(form.photo.data) 
+        file_url = url_for('main.get_file', filename=filename)
+
+        #CREATE A NEW CAMPAIGN OBJ 
         new_campaign = Campaign (
             name = form.name.data, 
-            description = form.description.data
+            description = form.description.data,
+            photo_url = file_url
         )
             
         db.session.add(new_campaign)
         db.session.commit()
+        #did not implement if url is empty !!!!
         flash('New campaign was created successfully.')
         return redirect(url_for('main.homepage'))
+    print(form.errors)
     return render_template('new_campaign.html', form = form)
 
 
@@ -65,13 +72,31 @@ def donate():
 def campaign_detail(campaign_id):
     campaign = Campaign.query.get(campaign_id)
     form = CampaignForm(obj = campaign)
+    form.photo.data = campaign.photo_url
+
+    # COME BACK HERE 👇👇👇👇👇👇👇👇👇👇👇 COME BACK HERE !!!!!
+
+    #TODO : NEED TO UPDATE CAMPAIGN WITH PICTUre CHANGING! 
+    # ! CURRENTLY GETTING ERROR ABOUT filename = photos.save(form.photo.data) being empty, not sure why
+    #TODO : THEN ALSO NEED TO DELETE CAMPAIGN ! 
+
+
+    print(f'in the photo_url field, there is: {form.photo.data}')
+    print(f'in the name field, there is: {form.name.data}')
     if form.validate_on_submit():
-        campaign.name = form.name.data
+        #Get path for updated picture
+        filename = photos.save(form.photo.data)
+        file_url = url_for('main.get_file', filename=filename)
+        
+        campaign.name = form.name.data 
         campaign.description = form.description.data
+        campaign.photo_url = file_url
         #db.session.merge(item)
+
         db.session.commit()
         flash('Campaign updated successfully.')
         return redirect(url_for('main.campaign_detail', campaign_id=campaign_id))
+    print(form.errors)
     return render_template('campaign_detail.html', campaign=campaign, form=form)
 
 @main.route('/delete_campaign/<campaign_id>', methods=['POST', 'GET'])
@@ -80,7 +105,6 @@ def delete_campaign(campaign_id):
     campaign = Campaign.query.get(campaign_id)
     form = CampaignForm(obj = campaign)
     if form.validate_on_submit():
-        print('went in the loop!')
         campaign = Campaign.query.get(campaign_id)
         db.session.delete(campaign)
         db.session.commit()
