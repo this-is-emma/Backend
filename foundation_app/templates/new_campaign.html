@@ -9,7 +9,7 @@
         
         <legend>Please enter the campaign information:</legend>
 
-        {{ form.name.label }}
+        <p>{{ form.name.label }}<span>*</span></p>
         {{ form.name }}
         <ul>
             {% for error in form.name.errors %}
@@ -17,7 +17,7 @@
             {% endfor %}
         </ul>
 
-        {{ form.description.label }}
+        <p>{{ form.description.label }}<span>*</span></p>
         {{ form.description }}
         <ul>
             {% for error in form.description.errors %}
@@ -25,7 +25,7 @@
             {% endfor %}
         </ul>
 
-        {{ form.photo.label}} (optional)
+        <p>{{ form.photo.label}}<span>*</span></p>
         {{ form.photo }}
         <ul>
             {% for error in form.photo.errors %}

@@ -9,10 +9,10 @@
         
         <legend>Please enter the donation details:</legend>
 
-        {{ form.amount.label }}
+        <p>{{ form.amount.label }}<span>*</span></p>
         {{ form.amount }}
 
-        {{ form.donated_to.label }}
+        <p>{{ form.donated_to.label }}<span>*</span></p>
         {{ form.donated_to }}
 
         {{ form.submit }}

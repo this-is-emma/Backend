@@ -8,7 +8,7 @@
         {{ form.csrf_token }}
         <legend>Enter your credentials</legend>
 
-        {{ form.username.label }}
+        <p>{{ form.username.label }}<span>*</span></p>
         {{ form.username }}
         <ul>
         {% for error in form.username.errors %}
@@ -16,7 +16,7 @@
         {% endfor %}
         </ul>
 
-        {{ form.password.label }}
+        <p>{{ form.password.label }}<span>*</span></p>
         {{ form.password }}
         <ul>
         {% for error in form.password.errors %}

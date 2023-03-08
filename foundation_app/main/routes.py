@@ -3,7 +3,7 @@ from datetime import date, datetime
 from foundation_app.extensions import photos
 from flask_login import current_user, login_required
 from foundation_app.models import Campaign, Donation
-from foundation_app.main.forms import CampaignForm, DonationForm
+from foundation_app.main.forms import CampaignForm, DeleteCampaignForm, DonationForm
 from foundation_app.config import Config
 from foundation_app.extensions import app, db
 
@@ -72,38 +72,31 @@ def donate():
 def campaign_detail(campaign_id):
     campaign = Campaign.query.get(campaign_id)
     form = CampaignForm(obj = campaign)
-    form.photo.data = campaign.photo_url
-
-    # COME BACK HERE 👇👇👇👇👇👇👇👇👇👇👇 COME BACK HERE !!!!!
-
-    #TODO : NEED TO UPDATE CAMPAIGN WITH PICTUre CHANGING! 
-    # ! CURRENTLY GETTING ERROR ABOUT filename = photos.save(form.photo.data) being empty, not sure why
-    #TODO : THEN ALSO NEED TO DELETE CAMPAIGN ! 
-
-
-    print(f'in the photo_url field, there is: {form.photo.data}')
-    print(f'in the name field, there is: {form.name.data}')
+    
     if form.validate_on_submit():
-        #Get path for updated picture
+        print('form is VALID!')
         filename = photos.save(form.photo.data)
         file_url = url_for('main.get_file', filename=filename)
-        
+
+        #Get path for updated picture as well as rest of info
         campaign.name = form.name.data 
         campaign.description = form.description.data
         campaign.photo_url = file_url
-        #db.session.merge(item)
 
         db.session.commit()
         flash('Campaign updated successfully.')
         return redirect(url_for('main.campaign_detail', campaign_id=campaign_id))
+    
     print(form.errors)
     return render_template('campaign_detail.html', campaign=campaign, form=form)
+
 
 @main.route('/delete_campaign/<campaign_id>', methods=['POST', 'GET'])
 @login_required
 def delete_campaign(campaign_id):
     campaign = Campaign.query.get(campaign_id)
-    form = CampaignForm(obj = campaign)
+    form = DeleteCampaignForm(obj = campaign)
+
     if form.validate_on_submit():
         campaign = Campaign.query.get(campaign_id)
         db.session.delete(campaign)
